@@ -33,7 +33,7 @@ def categories_route():
         },
         {
             "name": "Travel",
-            "path": "/category"
+            "path": "/category/travel"
         }
     ]
 
