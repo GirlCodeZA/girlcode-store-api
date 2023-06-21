@@ -6,3 +6,6 @@ A api for Girlcode Store built with flask.
 
 ```python -m pip install -r requirements.txt```
 
+## Run the api
+
+```python -m flask --app Api run```
