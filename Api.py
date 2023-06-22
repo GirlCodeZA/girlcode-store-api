@@ -1,6 +1,8 @@
 from flask import Flask
 from flask_cors import CORS
 
+from db import db
+
 app = Flask(__name__)
 CORS(app)
 
@@ -10,32 +12,22 @@ def main():
 
 @app.route('/categories')
 def categories_route():
-    tmp_categories = [
-        {
-            "name": "Furniture",
-            "path": "/category/furniture"
-        },
-        {
-            "name": "Hand Bag",
-            "path": "/category/hand-bag"
-        },
-        {
-            "name": "Books",
-            "path": "/category/books"
-        },
-        {
-            "name": "Tech",
-            "path": "/category/tech"
-        },
-        {
-            "name": "Sneakers",
-            "path": "/category/sneaker"
-        },
-        {
-            "name": "Travel",
-            "path": "/category/travel"
+    tmp_categories = []
+
+    cat_instance = db('categories')
+
+    rows = cat_instance.select()
+
+    for row in rows:
+        tmp_cat = {
+            "id": row[0],
+            "name": row[1],
+            "slug": row[2],
+            "desc": row[3],
+            "img": row[4]
         }
-    ]
+
+        tmp_categories.append(tmp_cat)
 
     categories_dict = {
         "categories": tmp_categories
