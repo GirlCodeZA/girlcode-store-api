@@ -11,3 +11,7 @@ A api for Girlcode Store built with flask.
 ```python -m flask --app Api run```
 
 ```python -m flask --app Api --debug run``` (on debug mode)
+
+## Contributors
+
+- [Murendeni Mukwevho](https://github.com/mukwevhom) - Facilitator
