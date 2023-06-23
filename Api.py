@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, send_file
 from flask_cors import CORS
 
 import config
@@ -37,3 +37,8 @@ def categories_route():
 
     return categories_dict
 
+@app.route('/image/<img_name>')
+def get_image(img_name):
+    filename = f'images/{img_name}'
+
+    return send_file(filename, mimetype='image/jpg')
