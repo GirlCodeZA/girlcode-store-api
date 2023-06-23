@@ -1,12 +1,13 @@
+import os
 from psycopg2 import pool
 
 conn_pool = pool.SimpleConnectionPool(
     1, 30,
-    database="",
-    host="localhost",
-    port="5432",
-    user="postgres",
-    password=""
+    database=os.getenv('DB_NAME'),
+    host=os.getenv('DB_HOST'),
+    port=os.getenv('DB_POST'),
+    user=os.getenv('DB_USER'),
+    password=os.getenv('DB_PASS')
 )
 
 class db:

@@ -1,6 +1,8 @@
 from flask import Flask
 from flask_cors import CORS
 
+import config
+
 from db import db
 
 app = Flask(__name__)
