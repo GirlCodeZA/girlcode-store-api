@@ -2,7 +2,7 @@ import os
 from psycopg2 import pool
 
 conn_pool = pool.SimpleConnectionPool(
-    1, 30,
+    1, 40,
     database=os.getenv('DB_NAME'),
     host=os.getenv('DB_HOST'),
     port=os.getenv('DB_POST'),
@@ -15,11 +15,11 @@ class db:
         self.table = table
         self.pool = conn_pool
 
-    def select(self):
+    def select(self, condition=None):
         conn = self.pool.getconn()
         cursor = conn.cursor()
 
-        cursor.execute(f'SELECT * FROM {self.table} ORDER BY id ASC')
+        cursor.execute(f'SELECT * FROM {self.table} {condition} ORDER BY id ASC')
 
         rows = cursor.fetchall()
 
