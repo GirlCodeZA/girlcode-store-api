@@ -35,3 +35,20 @@ CREATE TABLE products (
 
 INSERT INTO products (prod_name, prod_img, prod_desc, prod_slug, prod_price)
 VALUES ('Insta Mini 9', 'insta-mini-9.png', 'Selfie mode and selfie mirrow, Macro mode', 'insta-mini-9', 99.85);
+
+CREATE TABLE categories_products (
+	id SERIAL PRIMARY KEY,
+	cat_id INT NOT NULL,
+	prod_id INT NOT NULL,
+	UNIQUE (cat_id, prod_id),
+	FOREIGN KEY(cat_id) REFERENCES categories(id), 
+	FOREIGN KEY(prod_id) REFERENCES products(id)
+);
+
+INSERT INTO categories_products (cat_id, prod_id)
+VALUES (8, 1);
+
+SELECT * FROM categories_products
+FULL OUTER JOIN categories on categories_products.cat_id=categories.id
+FULL OUTER JOIN products on categories_products.prod_id=products.id
+WHERE categories.slug='tech'
