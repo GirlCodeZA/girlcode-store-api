@@ -1,4 +1,4 @@
-from flask import Flask, send_file
+from flask import Flask, send_file, request
 from flask_cors import CORS
 
 import config
@@ -154,3 +154,13 @@ def get_image(img_name):
     filename = f'images/{img_name}'
 
     return send_file(filename, mimetype='image/jpg')
+
+@app.route('/submit_checkout', methods=["POST"])
+def submit_checkout_route():
+    data = request.form
+
+    fullname = data['fullname']
+    emailaddress = data['emailaddress']
+    cart = data['cart']
+
+    return f'Submission from {fullname} {emailaddress}, their cart {cart}'
