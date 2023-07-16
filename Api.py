@@ -1,5 +1,6 @@
 from flask import Flask, send_file, request
 from flask_cors import CORS
+import json
 
 import config
 
@@ -161,6 +162,19 @@ def submit_checkout_route():
 
     fullname = data['fullname']
     emailaddress = data['emailaddress']
-    cart = data['cart']
+    cart = json.loads(data['cart'])
 
-    return f'Submission from {fullname} {emailaddress}, their cart {cart}'
+    clients_instance = db('clients')
+    carts_instance = db('carts')
+
+    client_rows = clients_instance.select(condition=f"WHERE emailaddress='{emailaddress}'")
+    client_id = None
+
+    if len(client_rows):
+        client_id = client_rows[0][0]
+    else:
+        client_id = clients_instance.insert("fullname, emailaddress", f"'{fullname}', '{emailaddress}'")
+
+    cart_id = carts_instance.insert("cart_content, client_id", f"'{json.dumps(cart)}', {client_id}")
+
+    return f'Submission from {cart_id}'

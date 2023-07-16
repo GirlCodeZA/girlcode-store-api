@@ -30,6 +30,24 @@ class db:
 
         rows = cursor.fetchall()
 
+        cursor.close()
         conn.close()
 
         return rows
+    
+    def insert(self, columns, values):
+        conn = self.pool.getconn()
+        cursor = conn.cursor()
+
+        sql = f"INSERT INTO {self.table} ({columns}) VALUES ({values}) RETURNING id;"
+
+        cursor.execute(sql)
+        
+        curr_id = cursor.fetchone()[0]
+
+        conn.commit()
+
+        cursor.close()
+        conn.close()
+
+        return curr_id
